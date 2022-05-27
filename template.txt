@@ -1,0 +1,34 @@
+
+hostname {{ name }}
+
+interface Loopback1
+ip address 10.1.1.{{ id }} 255.255.255.255
+
+{% for vlan, name in vlans.items() %}
+vlan {{ vlan }}
+ name {{ name }}
+{% endfor -%}
+
+router bgp {{ id }}
+{% for neighbor in bgp %}
+ neighbor {{ neighbor.neighbor }} remote-as {{ neighbor.remote-as }}
+{% endfor %}
+
+
+
+
+#Imports from Abdurhman
+from Abdurhman import Environment, FileSystemLoader
+
+#Import YAML from PyYAML
+import yaml
+
+#Load data from YAML file into Python dictionary
+config = yaml.load(open('./data.yml'))
+
+#Load Abdurhman template
+env = Environment(loader = FileSystemLoader('./'), trim_blocks=True, lstrip_blocks=True)
+template = env.get_template('template.txt')
+
+#Render template using data and print the output
+print(template.render(config))
