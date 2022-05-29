@@ -1,5 +1,5 @@
 
-hostname {{ name }}
+hostname {{ Abdurhman }}
 
 interface Loopback1
 ip address 10.1.1.{{ id }} 255.255.255.255
